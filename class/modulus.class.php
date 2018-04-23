@@ -53,9 +53,8 @@ class Modulus
 				break;
 
 			case 'viewUse':
-				var_dump($this->U->sendPublicAtributes('whereIam', 'path'));
-				
-				//$this->V->$name = array('useMode' => $value, 'url' => $this->U->sendPublicAtributes('whereIam', 'path'));
+				//var_dump($this->U->sendPublicAtributes('whereIam', 'path'));
+				$this->V->$name = array('usage' => $value, 'url' => $this->U->sendPublicAtributes('whereIam', 'path'));
 				break;
 
 			// case 'host':
