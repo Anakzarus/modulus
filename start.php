@@ -1,12 +1,14 @@
 <?php 
-
-	require_once('class/modulus.class.php');
+	$p = 'class/modulus.class.php';
+	require_once($p);
 	$site = new Modulus();
 	$site->index = "/modulus";
 	$site->home = "/home";
-	$site->allowPaths = array('/home', '/home/test');
+	$site->allowPaths = array('/home');
 
-	$site->viewUse = 'paths';
+	$site->use = 'paths';
+
+	$site->run();	
 	// $site->viewUse = 'achives';
 	// $site->viewUse = 'deepable';
 

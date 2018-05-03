@@ -37,6 +37,11 @@ class Modulus
 		require_once("class/javascript.class.php");
 	}
 
+	public function run(){
+		echo "string";
+		$this->V->start(array());
+	}
+
 	function __construct()
 	{
 		$this->requires();
@@ -52,9 +57,9 @@ class Modulus
 				$this->U->$name = $value; 
 				break;
 
-			case 'viewUse':
+			case 'use':
 				//var_dump($this->U->sendPublicAtributes('whereIam', 'path'));
-				$this->V->$name = array('usage' => $value, 'url' => $this->U->sendPublicAtributes('whereIam', 'path'));
+				$this->V->$name = array('usage' => $value, 'url' => $this->U->sendPublicAtributes('whereIam', 'path', 'firstPage'));
 				break;
 
 			// case 'host':
