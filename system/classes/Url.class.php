@@ -4,9 +4,6 @@
 	*/
 	class Url {
 
-		public $https;
-		public $host;
-		public $real;
 		public $mask;
 		public $index;
 		public $paths;
@@ -15,35 +12,37 @@
 		public $connection_aborted;
 
 		function __construct() {
-			$this->https = isset($_SERVER['HTTPS']);
-			$this->host = (isset($_SERVER['HTTPS']) ? "https" : "http"). "://" . $_SERVER['HTTP_HOST'];
-			$this->real = $this->host . $_SERVER['PHP_SELF'];
-			$this->mask = $_SERVER['REQUEST_URI'];
-
-			$this->removeLimitBars();
-			$this->index = "";
-
-			
-			$this->allowed = array();
-			$this->paths = array();
-			$this->how_deep = 0;
 			$this->connection_aborted = false;
-		}
-
-		public function define_index($string){
-			if(strpos($this->mask, $string) == 0){
-				$this->mask = str_replace($string, "", $this->mask);
-				$this->removeLimitBars();
-				$this->explodeBars();
-				$this->index = $string;
-			} else {
-				return null;
+			$this->how_deep = 0;
+			
+			$hostpath = $_SERVER['DOCUMENT_ROOT'];
+			$fullpath = str_replace("\\", "/", getcwd());
+			if(strpos($fullpath, $hostpath) != 0){
+				echo "[0001]";
+				exit();
 			}
-			return $this;
+			$this->index = substr($fullpath, (strlen($hostpath) - strlen($fullpath)));
+			$this->mask = substr($_SERVER['REQUEST_URI'], strlen($this->index) - strlen($_SERVER['REQUEST_URI']));
+			$this->removeLimitBars();
+			$this->explodeBars();
+
+			$pages = func_get_args();
+			if(count($pages) <3){
+				echo "[0002]";
+				exit();
+			}
+			var_dump($pages);
+			$this->allow_paths($pages)->but_if_realocate($pages[0], $pages[1])->but_error_realocate($pages[2]);
 		}
 
 		public function allow_paths() {
 			$this->allowed = func_get_args();
+			if(count($this->allowed) == 1 && is_array($this->allowed[0])){
+				$this->allowed = $this->allowed[0];
+			} else {
+				$this->connection_aborted = true;
+			}
+			var_dump($this);
 			if(!$this->is_allowed($this->mask)){
 				$this->connection_aborted = true;
 			}
@@ -53,7 +52,8 @@
 		public function but_if_realocate($wrong, $right){
 			if(!$this->connection_aborted){
 				if($this->mask == $wrong){
-					header('location: ' . $right);
+					echo $this->mask . " == " . $wrong;
+					$this->realocate($right);
 				}
 			}
 			return $this;
@@ -62,13 +62,19 @@
 		public function but_error_realocate($page){
 			if($this->connection_aborted){
 				echo $this->mask;
-				$page = $this->host . '/' . $this->index . '/' . $page;
-				header('location: ' . $page);
+				$this->realocate($page);
 			} 
 			return $this;
 		}
+		public function realocate($page){
+			$page = $this->host . $this->index . '/' . $page;
+			header('location: ' . $page);
+		}
 
 		public function removeLimitBarsGeneric ($string) {
+			if($string == "/" || $string == "//"){
+				return "";
+			}
 			if (substr($string, 0, 1) === "/") {
 				$len = strlen($string);
 				$string = substr($string, 1, $len - 1);
@@ -106,7 +112,7 @@
 			} return false;
 		}
 
-		public function get_path($int = null){
+		public function gerate_path_string($int = null){
 			if($int == null){
 				$int = $this->how_deep;
 			}

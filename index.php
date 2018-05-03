@@ -1,9 +1,8 @@
 <?php 
 
-include 'system/start.php'; 
+require_once('system/start.php'); 
 
-$url = new Url();
-$path = $url->define_index('modulus')->allow_paths('', '404', 'home')->but_if_realocate('', 'home')->but_error_realocate('404')->get_path();
-include 'view/' . $path;
+$url = new Url('', 'home', '404');
+include 'view/' . $url->gerate_path_string();
 
 ?>
