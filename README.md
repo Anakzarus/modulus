@@ -1,4 +1,4 @@
 # Learning php MVC
 
-*System start
-*Route (url)
+* System start
+* Route (url)
