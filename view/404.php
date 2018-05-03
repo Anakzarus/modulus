@@ -113,6 +113,6 @@
 	</style>
 </head>
 <body>
-	Holy! PHP just stoped working!!
+	404 - Page not found...
 </body>
 </html>
