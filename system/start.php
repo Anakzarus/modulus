@@ -11,14 +11,14 @@
 			$last_name = end($names);
 			$class_name = str_replace('\\', DIRECTORY_SEPARATOR , $class_name);
 			if(!verify_sufix($last_name)){
-				require $class_name.'.php';
+				require_once($class_name.'.php');
 				return;
 			}
 		}
 
 
 		//System classes
-		prepare_file(SYSTEM_PATH . $last_name . SYSTEM_EXTENTION);
+		require_once(SYSTEM_PATH . $last_name . SYSTEM_EXTENTION);
 	});
 
 	function verify_sufix($name){
@@ -31,17 +31,5 @@
 			}
 		}
 		return false;
-	}
-	function morph($name, $sufix){
-		//removing sufix
-		$string = substr($name, 0, -strlen($sufix));
-		//trasnforming underline to bar
-		$string = str_replace("_", "/", $string);
-		return $string;
-	}
-	function prepare_file($filename){
-		if (file_exists($filename)) {
-			require_once($filename);
-		}
 	}
 ?>
