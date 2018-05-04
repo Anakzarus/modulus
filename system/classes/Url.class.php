@@ -8,12 +8,12 @@
 		public $index;
 		public $paths;
 		public $allowed;
-		public $how_deep;
 		public $connection_aborted;
+		public $how_deep_is_ur_love;
 
 		function __construct() {
 			$this->connection_aborted = false;
-			$this->how_deep = 0;
+			$this->how_deep_is_ur_love = 0;
 			
 			$hostpath = $_SERVER['DOCUMENT_ROOT'];
 			$fullpath = str_replace("\\", "/", getcwd());
@@ -31,7 +31,6 @@
 				echo "[0002]";
 				exit();
 			}
-			var_dump($pages);
 			$this->allow_paths($pages)->but_if_realocate($pages[0], $pages[1])->but_error_realocate($pages[2]);
 		}
 
@@ -42,7 +41,6 @@
 			} else {
 				$this->connection_aborted = true;
 			}
-			var_dump($this);
 			if(!$this->is_allowed($this->mask)){
 				$this->connection_aborted = true;
 			}
@@ -52,7 +50,6 @@
 		public function but_if_realocate($wrong, $right){
 			if(!$this->connection_aborted){
 				if($this->mask == $wrong){
-					echo $this->mask . " == " . $wrong;
 					$this->realocate($right);
 				}
 			}
@@ -61,7 +58,6 @@
 
 		public function but_error_realocate($page){
 			if($this->connection_aborted){
-				echo $this->mask;
 				$this->realocate($page);
 			} 
 			return $this;
@@ -86,9 +82,9 @@
 			return $string;
 		}
 		public function removeLimitBars($mask = null) {
-			if($mask != null && is_string($mask)){
+			if($mask !== null && is_string($mask)){
 				return $this->removeLimitBarsGeneric($mask);
-			} elseif ($mask == null && is_string($this->mask)){
+			} elseif ($mask === null && is_string($this->mask)){
 				$this->mask = $this->removeLimitBarsGeneric($this->mask);
 			}
 		}
@@ -99,9 +95,9 @@
 		}
 
 		public function explodeBars($mask = null) {
-			if($mask != null && is_string($mask)){
+			if($mask !== null && is_string($mask)){
 				return $this->explodeBarsGeneric($mask);
-			} elseif ($mask == null && is_string($this->mask)){
+			} elseif ($mask === null && is_string($this->mask)){
 				$this->paths = $this->explodeBarsGeneric($this->mask);
 			}
 		}
@@ -110,24 +106,6 @@
 			if (in_array($string, $this->allowed)) {
 				return true;
 			} return false;
-		}
-
-		public function gerate_path_string($int = null){
-			if($int == null){
-				$int = $this->how_deep;
-			}
-			$ret = "";
-			foreach ($this->paths as $key => $value) {
-				if($key > 0){
-					if($key < $int){
-						$ret .= "/";
-					} else {
-						$ret .= "_";
-					}
-				}
-				$ret .= $value;
-			}
-			return $ret . ".php";
 		}
 	}
 ?>

@@ -3,7 +3,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" >
 	<meta charset="utf-8" >
-	<title>[ERROR]Persective Buttons</title>
+	<title>[ERROR]Page not found...</title>
 	<style type="text/css">
 		html{
 
@@ -110,9 +110,17 @@
 				background: salmon;
 			}
 		}
+		.text{
+			display: inline-block;
+			vertical-align: middle;
+			line-height: 2.5em;
+		}
 	</style>
 </head>
 <body>
-	404 - Page not found...
+	<div class="text">
+		<div style="font-size: 5em;">404</div>
+		<div style="font-size: 1em;">[Page not found]</div>
+	</div>
 </body>
 </html>
