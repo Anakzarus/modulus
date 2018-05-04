@@ -17,7 +17,11 @@ namespace view;
 
 		public function body(){
 			?>
-				lel
+				<form method="get">
+					<input type="text" name="name">
+					<input type="password" name="pass">
+					<input type="submit" value="Enviar">
+				</form>
 			<?php
 		}
 	}	

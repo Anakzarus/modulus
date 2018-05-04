@@ -48,14 +48,7 @@
 		}
 
 		public function get_query(){
-			$paths = array_reverse($this->paths);
-			$path = $paths[0];
-			$query = array();
-			if(strpos($path, "?") !== false){
-				$query = substr($path, 1);
-				$query = explode("&", $query);
-			}
-			return $query;
+			return $this->query;
 		}
 	}
 ?>

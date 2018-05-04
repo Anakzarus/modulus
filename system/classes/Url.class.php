@@ -24,6 +24,7 @@
 			}
 			$this->index = substr($fullpath, (strlen($hostpath) - strlen($fullpath)));
 			$this->mask = substr($_SERVER['REQUEST_URI'], strlen($this->index) - strlen($_SERVER['REQUEST_URI']));
+			$this->store_query();
 			$this->removeLimitBars();
 			$this->explodeBars();
 
@@ -108,6 +109,12 @@
 			if (in_array($string, $this->allowed)) {
 				return true;
 			} return false;
+		}
+
+		public function store_query(){
+			$query = explode("?", $this->mask);
+			$this->mask = $query[0];
+			parse_str($query[1], $this->query);
 		}
 	}
 ?>
