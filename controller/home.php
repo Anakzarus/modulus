@@ -1,10 +1,12 @@
 <?php
+namespace controller;
 	/**
 	* 
 	*/
-	class homeController extends Controller {
-		function __construct() {
-			$html = new homeView();
+	class home extends Controller {
+		function __construct($query = array()) {
+			$this->actions($query);
+			$html = new \view\home();
 		}
 	}
 ?>

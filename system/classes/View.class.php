@@ -1,4 +1,5 @@
 <?php
+namespace view;
 	/**
 	* 
 	*/
@@ -9,26 +10,6 @@
 		public $scripts;
 		public $viewport;
 		public $stylesheets;
-		public function header(){
-			?>
-				<!DOCTYPE html>
-				<html>
-				<head>
-					<?php
-						if (is_string($this->viewport) && $this->viewport !== null) {
-							?>
-								<meta name="viewport" content="<?= $this->viewport ?>" />
-							<?php
-						}
-					?>
-					<title><?= $this->pre['title'] ?></title>
-					<?php
-						$this->include_scripts();
-						$this->include_styleheets();
-					?>
-				</head>
-			<?php
-		}
 
 		function __construct($specs) {
 			$this->pre = array(
@@ -41,6 +22,8 @@
 			$this->pre = array_merge($this->pre, $specs);
 			$this->store();
 			$this->header();
+			$this->body();
+			$this->footer();
 		}
 
 		public function store(){
@@ -67,6 +50,39 @@
 					<link rel="stylesheet" type="text/css" href="<?= $filename ?>" />
 				<?php
 			}
+		}
+
+		public function header(){
+			?>
+				<!DOCTYPE html>
+				<html>
+				<head>
+					<?php
+						if (is_string($this->viewport) && $this->viewport !== null) {
+							?>
+								<meta name="viewport" content="<?= $this->viewport ?>" />
+							<?php
+						}
+					?>
+					<title><?= $this->pre['title'] ?></title>
+					<?php
+						$this->include_scripts();
+						$this->include_styleheets();
+					?>
+				</head>
+				<body>
+			<?php
+		}
+		public function body(){
+			?>
+				...
+			<?php
+		}
+		public function footer(){
+			?>
+				</body>
+				</html>
+			<?php
 		}
 	}
 ?>

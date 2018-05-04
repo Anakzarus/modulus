@@ -1,10 +1,11 @@
 <?php
+namespace controller;
 	/**
 	* 
 	*/
-	class home_testController extends Controller {
+	class home_test extends Controller {
 		function __construct() {
-			echo "nem ferrando";
+			
 		}
 	}
 ?>

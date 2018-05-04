@@ -6,8 +6,29 @@
 		private $controller;
 		function __construct() {
 			parent::__construct(...func_get_args());
-			$controller = $this->generate_path_string(1) . CONTROLLER_SUFIX;
-			$this->controller = new $controller;
+
+			if($this->mask == $this->error){
+
+//             _________________________________________________________
+//             \                                                         \
+//              \             /\\\         /\\\\\\\               /\\\    \        
+//               \           /\\\\\       /\\\/////\\\           /\\\\\    \       
+//                \         /\\\/\\\      /\\\    \//\\\        /\\\/\\\    \      
+//                 \       /\\\/\/\\\     \/\\\     \/\\\      /\\\/\/\\\    \     
+//                  \     /\\\/  \/\\\     \/\\\     \/\\\    /\\\/  \/\\\    \    
+//                   \   /\\\\\\\\\\\\\\\\  \/\\\     \/\\\  /\\\\\\\\\\\\\\\\ \   
+//                    \  \///////////\\\//   \//\\\    /\\\  \///////////\\\//  \  
+//                     \            \/\\\      \///\\\\\\\/             \/\\\    \ 
+//                      \            \///         \///////               \///     \
+//                       \_________________________________________________________\
+
+				$error = VIEW_NS . "error";
+				$this->error = new $error($this->get_query());
+			} else {
+				$controller = $this->generate_path_string(1);
+				$controller = CONTROLLER_NS . $controller;
+				$this->controller = new $controller($this->get_query());
+			}
 		}
 
 		public function generate_path_string($int = null){
@@ -24,6 +45,17 @@
 				$ret .= $value;
 			}
 			return $ret;
+		}
+
+		public function get_query(){
+			$paths = array_reverse($this->paths);
+			$path = $paths[0];
+			$query = array();
+			if(strpos($path, "?") !== false){
+				$query = substr($path, 1);
+				$query = explode("&", $query);
+			}
+			return $query;
 		}
 	}
 ?>

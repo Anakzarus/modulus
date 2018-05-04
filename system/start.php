@@ -3,39 +3,34 @@
 
 	//Class auto upload depending on its names
 	spl_autoload_register(function($class_name){
-		$call_system = true;
+
+		$last_name = $class_name;
 		
-		$sufixes = array(
-			CONTROLLER_PATH => CONTROLLER_SUFIX, 
-			MODEL_PATH	 	=> MODEL_SUFIX, 
-			VIEW_PATH 		=> VIEW_SUFIX
-		);
-
-		/*Dinamical classes
-		 *It test the sufix of the class name 
-		 */
-		foreach ($sufixes as $path => $sufix) {
-			
-			if(verify_sufix($class_name, $sufix)){
-				
-				$class_path = $path . morph($class_name, $sufix) . EXTENTION;
-				prepare_file($class_path);
-				
-				$call_system = false;
-			} 
+		if (strpos($class_name,'\\')!==false){
+			$names = explode('\\', $class_name);
+			$last_name = end($names);
+			$class_name = str_replace('\\', DIRECTORY_SEPARATOR , $class_name);
+			if(!verify_sufix($last_name)){
+				require $class_name.'.php';
+				return;
+			}
 		}
-
-
 
 
 		//System classes
-		if ($call_system) {
-			prepare_file(SYSTEM_PATH . $class_name . SYSTEM_EXTENTION);
-		}
+		prepare_file(SYSTEM_PATH . $last_name . SYSTEM_EXTENTION);
 	});
 
-	function verify_sufix($name, $sufix){
-		return (strpos($name, $sufix) !== false && strlen($name) > strlen($sufix));
+	function verify_sufix($name){
+
+		$sufixes = array(CONTROLLER_SUFIX, MODEL_SUFIX, VIEW_SUFIX);
+		$return = false;
+		foreach ($sufixes as $sufix) {
+			if($name == $sufix){
+				return true;
+			}
+		}
+		return false;
 	}
 	function morph($name, $sufix){
 		//removing sufix

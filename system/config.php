@@ -4,9 +4,9 @@
 	define('CONTROLLER_SUFIX', 'Controller');
 	define('MODEL_SUFIX', 'Model');
 	define('VIEW_SUFIX', 'View');
-	define('CONTROLLER_PATH', 'controller/');
-	define('MODEL_PATH', 'model/');
-	define('VIEW_PATH', 'view/');
+	define('CONTROLLER_NS', '\\controller\\');
+	define('MODEL_NS', '\\model\\');
+	define('VIEW_NS', '\\view\\');
 	define('EXTENTION', '.php');
 	//System classes
 	define('SYSTEM_EXTENTION', '.class.php');

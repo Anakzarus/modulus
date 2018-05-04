@@ -5,6 +5,7 @@
 	class Url {
 
 		public $mask;
+		public $error;
 		public $index;
 		public $paths;
 		public $allowed;
@@ -57,6 +58,7 @@
 		}
 
 		public function but_error_realocate($page){
+			$this->error = $page;
 			if($this->connection_aborted){
 				$this->realocate($page);
 			} 
