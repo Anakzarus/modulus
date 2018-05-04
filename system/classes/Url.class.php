@@ -31,7 +31,6 @@
 				echo "[0002]";
 				exit();
 			}
-			var_dump($pages);
 			$this->allow_paths($pages)->but_if_realocate($pages[0], $pages[1])->but_error_realocate($pages[2]);
 		}
 
@@ -42,7 +41,6 @@
 			} else {
 				$this->connection_aborted = true;
 			}
-			var_dump($this);
 			if(!$this->is_allowed($this->mask)){
 				$this->connection_aborted = true;
 			}
@@ -52,7 +50,6 @@
 		public function but_if_realocate($wrong, $right){
 			if(!$this->connection_aborted){
 				if($this->mask == $wrong){
-					echo $this->mask . " == " . $wrong;
 					$this->realocate($right);
 				}
 			}
@@ -61,7 +58,6 @@
 
 		public function but_error_realocate($page){
 			if($this->connection_aborted){
-				echo $this->mask;
 				$this->realocate($page);
 			} 
 			return $this;
