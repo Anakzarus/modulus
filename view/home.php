@@ -1,15 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>HOME</title>
-	<!-- <link rel="stylesheet" type="text/css" href="stylesheet/reset.css"> -->
-	<!-- <link rel="stylesheet" type="text/css" href="stylesheet/home.css"> -->
-</head>
-<body>
-
 <?php
-	echo getcwd();
-?>
+namespace view;
+	/**
+	* 
+	*/
+	class home extends View {
+		public $data;
+		function __construct() {
+			$this->data = func_get_args();
+			parent::__construct(array(
+				'lang' => 'pt-br',
+				'title' => 'Homenzinho',
+				'viewport' => 'width=device-width, initial-scale=1.0',
+				'stylesheets' => array('reset')
+			));
+		}
 
-</body>
-</html>
+		public function body(){
+			?>
+				lel
+			<?php
+		}
+	}	
+?>
