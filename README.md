@@ -5,4 +5,4 @@
 * Controller.class
 * Model.class
 * View.class
-* * JQuerysh __construct
+ * JQuerysh __construct
